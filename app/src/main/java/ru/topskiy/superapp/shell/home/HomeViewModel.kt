@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.stateIn
 import ru.topskiy.superapp.core.home.HomeBlockProvider
 import ru.topskiy.superapp.core.preferences.PreferencesRepository
 import ru.topskiy.superapp.core.services.ServiceCapability
+import ru.topskiy.superapp.core.services.ServiceId
 import ru.topskiy.superapp.core.services.ServiceRegistry
 import javax.inject.Inject
 
@@ -20,14 +21,6 @@ class HomeViewModel @Inject constructor(
     private val preferences: PreferencesRepository,
 ) : ViewModel() {
 
-    /**
-     * Реактивный список блоков для Главной.
-     * Обновляется автоматически при изменении enabled-сервисов в DataStore.
-     *
-     * Двойной фильтр:
-     * 1. Сервис должен быть включён (DataStore или enabledByDefault)
-     * 2. Сервис должен иметь capability [ServiceCapability.HOME_BLOCK]
-     */
     val blocks: StateFlow<List<HomeBlockProvider>> = preferences.enabledServiceIds
         .map { enabledIds ->
             homeBlockProviders
@@ -38,7 +31,7 @@ class HomeViewModel @Inject constructor(
                         ?: return@filter false
 
                     val isEnabled = if (enabledIds.isEmpty()) descriptor.enabledByDefault
-                                    else descriptor.id in enabledIds
+                    else descriptor.id in enabledIds
 
                     isEnabled && descriptor.supports(ServiceCapability.HOME_BLOCK)
                 }
@@ -49,4 +42,6 @@ class HomeViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = emptyList(),
         )
+
+    fun routeFor(serviceId: ServiceId): String? = serviceRegistry.getService(serviceId)?.descriptor?.rootRoute
 }

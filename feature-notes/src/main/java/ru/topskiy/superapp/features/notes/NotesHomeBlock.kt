@@ -1,17 +1,20 @@
 package ru.topskiy.superapp.features.notes
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.StickyNote2
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import ru.topskiy.superapp.core.home.HomeBlockProvider
 import ru.topskiy.superapp.core.services.ServiceId
+import ru.topskiy.superapp.core.ui.components.AppCard
+import ru.topskiy.superapp.core.ui.tokens.Spacing
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,38 +25,19 @@ class NotesHomeBlock @Inject constructor() : HomeBlockProvider {
     override val priority = 20
 
     @Composable
-    override fun Content() {
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = "Последние заметки",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                )
-                Text(
-                    text = "• Список покупок",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-                Text(
-                    text = "• Идеи для проекта",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                )
-                Text(
-                    text = "• Контакты партнёров",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                )
+    override fun Content(modifier: Modifier) {
+        AppCard(modifier = modifier.fillMaxWidth()) {
+            androidx.compose.foundation.layout.Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+                Icon(Icons.Outlined.StickyNote2, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Text("Последние заметки", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                Icon(Icons.AutoMirrored.Outlined.ArrowForward, contentDescription = null)
             }
+            Text(
+                text = "Список покупок, идеи для проекта и контакты",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = Spacing.xs),
+            )
         }
     }
 }

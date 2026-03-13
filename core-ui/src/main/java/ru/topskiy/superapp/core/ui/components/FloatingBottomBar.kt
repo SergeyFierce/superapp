@@ -19,11 +19,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ru.topskiy.superapp.core.ui.tokens.Elevation
 import ru.topskiy.superapp.core.ui.tokens.Spacing
 
 data class FloatingBottomBarItem(
@@ -46,36 +45,42 @@ fun FloatingBottomBar(
     selectedRoute: String?,
     onItemSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
-    containerHeight: Dp = 62.dp,
+    containerHeight: Dp = 64.dp,
 ) {
-    val containerShape = RoundedCornerShape(24.dp)
+    val shape = RoundedCornerShape(28.dp)
 
     Box(
-        modifier = modifier.padding(horizontal = Spacing.md),
+        modifier = modifier
+            .padding(horizontal = Spacing.md, vertical = Spacing.sm)
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = containerShape,
-            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.94f),
-            shadowElevation = Elevation.md,
-            tonalElevation = 0.dp,
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .blur(18.dp)
+                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.18f))
+                .height(containerHeight + 4.dp),
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.70f))
+                .height(containerHeight)
+                .padding(horizontal = Spacing.sm),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
-                modifier = Modifier
-                    .height(containerHeight)
-                    .padding(horizontal = Spacing.sm),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                items.forEach { item ->
-                    FloatingBottomBarTab(
-                        item = item,
-                        selected = item.route == selectedRoute,
-                        onClick = { onItemSelected(item.route) },
-                        modifier = Modifier.weight(1f),
-                    )
-                }
+            items.forEach { item ->
+                FloatingBottomBarTab(
+                    item = item,
+                    selected = item.route == selectedRoute,
+                    onClick = { onItemSelected(item.route) },
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
     }
@@ -88,33 +93,31 @@ private fun FloatingBottomBarTab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val contentColor = if (selected) {
-        MaterialTheme.colorScheme.onSurface
-    } else {
-        MaterialTheme.colorScheme.onSurfaceVariant
-    }
-
-    val activeContainerColor = MaterialTheme.colorScheme.primaryContainer
-
     Row(
         modifier = modifier
-            .clip(RoundedCornerShape(18.dp))
+            .clip(RoundedCornerShape(20.dp))
+            .background(
+                if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
+                else Color.Transparent,
+            )
             .clickable(onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 6.dp),
+            .padding(horizontal = 10.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
                 .clip(CircleShape)
-                .background(if (selected) activeContainerColor else Color.Transparent)
+                .background(
+                    if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.14f)
+                    else Color.Transparent,
+                )
                 .padding(PaddingValues(horizontal = 10.dp, vertical = 8.dp)),
-            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = item.icon,
                 contentDescription = item.label,
-                tint = if (selected) MaterialTheme.colorScheme.primary else contentColor,
+                tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp),
             )
         }
@@ -126,11 +129,11 @@ private fun FloatingBottomBarTab(
         ) {
             Text(
                 text = item.label,
-                color = contentColor,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(start = 6.dp, end = 8.dp),
+                modifier = Modifier.padding(start = 4.dp, end = 6.dp),
             )
         }
     }

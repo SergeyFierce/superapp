@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.GridView
@@ -16,7 +18,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -74,17 +75,14 @@ fun AppShell(
             selectedRoute = currentRoute,
             onItemSelected = { route ->
                 navController.navigate(route) {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
+                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                     launchSingleTop = true
                     restoreState = true
                 }
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(bottom = 6.dp),
+                .windowInsetsPadding(WindowInsets.navigationBars),
         )
     }
 }
@@ -100,7 +98,7 @@ private fun AppNavHost(
     NavHost(
         navController = navController,
         startDestination = AppRoutes.HOME,
-        modifier = modifier,
+        modifier = modifier.windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)),
     ) {
         homeScreen(navController = navController)
         servicesScreen(navController = navController, serviceRegistry = serviceRegistry)
@@ -109,8 +107,6 @@ private fun AppNavHost(
 
         serviceRegistry.getAllProviders()
             .filterIsInstance<NavigableServiceProvider>()
-            .forEach { provider ->
-                with(provider) { registerGraph(navController) }
-            }
+            .forEach { provider -> with(provider) { registerGraph(navController) } }
     }
 }

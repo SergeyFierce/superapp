@@ -23,6 +23,8 @@ data class SearchUiState(
     val query: String = "",
     val results: List<SearchResult> = emptyList(),
     val isLoading: Boolean = false,
+    val recentSearches: List<String> = listOf("Платежи", "Заметки", "Сегодня"),
+    val suggestions: List<String> = listOf("Создать задачу", "Последние транзакции", "Идеи"),
 )
 
 @HiltViewModel
@@ -46,6 +48,12 @@ class SearchViewModel @Inject constructor(
         queryFlow.value = query
     }
 
+    fun onSuggestionClick(value: String) = onQueryChange(value)
+
+    fun serviceTitle(serviceId: String): String =
+        serviceRegistry.getAllProviders().firstOrNull { it.descriptor.id.value == serviceId }?.descriptor?.title
+            ?: serviceId
+
     @OptIn(FlowPreview::class)
     private fun observeQuery() {
         viewModelScope.launch {
@@ -63,15 +71,11 @@ class SearchViewModel @Inject constructor(
         }
 
         _state.update { it.copy(isLoading = true) }
-
-        // Читаем текущий снимок enabled-сервисов
         val enabledIds = preferences.enabledServiceIds.first()
 
         val activeProviders = searchProviders.filter { provider ->
-            val descriptor = serviceRegistry.getService(provider.serviceId)?.descriptor
-                ?: return@filter false
-            val isEnabled = if (enabledIds.isEmpty()) descriptor.enabledByDefault
-                            else descriptor.id in enabledIds
+            val descriptor = serviceRegistry.getService(provider.serviceId)?.descriptor ?: return@filter false
+            val isEnabled = if (enabledIds.isEmpty()) descriptor.enabledByDefault else descriptor.id in enabledIds
             isEnabled && descriptor.supports(ServiceCapability.SEARCH_PROVIDER)
         }
 
@@ -79,6 +83,12 @@ class SearchViewModel @Inject constructor(
             runCatching { provider.search(query) }.getOrDefault(emptyList())
         }.sortedByDescending { it.relevance }
 
-        _state.update { it.copy(results = allResults, isLoading = false) }
+        _state.update {
+            it.copy(
+                results = allResults,
+                isLoading = false,
+                recentSearches = (listOf(query) + it.recentSearches).distinct().take(5),
+            )
+        }
     }
 }
