@@ -1,6 +1,8 @@
 package ru.topskiy.superapp.core.ui.theme
 
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ fun AppTheme(
 
     if (!view.isInEditMode) {
         SideEffect {
+            val window = view.context.findActivity()?.window ?: return@SideEffect
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.background.toArgb()
             window.navigationBarColor = colorScheme.background.toArgb()
@@ -44,4 +47,10 @@ fun AppTheme(
         shapes = Shapes,
         content = content,
     )
+}
+
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }
