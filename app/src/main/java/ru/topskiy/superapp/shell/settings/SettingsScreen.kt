@@ -1,30 +1,28 @@
 package ru.topskiy.superapp.shell.settings
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ru.topskiy.superapp.core.common.AppTheme
 import ru.topskiy.superapp.core.navigation.AppRoutes
+import ru.topskiy.superapp.core.ui.components.AppCard
+import ru.topskiy.superapp.core.ui.tokens.Spacing
 import ru.topskiy.superapp.shell.AppShellState
 
 fun NavGraphBuilder.settingsScreen(
@@ -32,10 +30,7 @@ fun NavGraphBuilder.settingsScreen(
     onThemeChange: (AppTheme) -> Unit,
 ) {
     composable(AppRoutes.SETTINGS) {
-        SettingsScreen(
-            shellState = shellState,
-            onThemeChange = onThemeChange,
-        )
+        SettingsScreen(shellState = shellState, onThemeChange = onThemeChange)
     }
 }
 
@@ -44,67 +39,41 @@ fun SettingsScreen(
     shellState: AppShellState,
     onThemeChange: (AppTheme) -> Unit,
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+    val sections = listOf("Appearance", "Services", "Notifications", "About")
+
+    LazyColumn(
+        contentPadding = PaddingValues(horizontal = Spacing.md, vertical = Spacing.lg),
+        verticalArrangement = Arrangement.spacedBy(Spacing.md),
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, top = 20.dp, bottom = 110.dp),
+            .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
-        Text(
-            text = "Настройки",
-            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
-        )
+        item { Text("Настройки", style = MaterialTheme.typography.headlineMedium) }
 
-        AppearanceSection(
-            currentTheme = shellState.theme,
-            onThemeChange = onThemeChange,
-        )
-    }
-}
-
-@Composable
-private fun AppearanceSection(
-    currentTheme: AppTheme,
-    onThemeChange: (AppTheme) -> Unit,
-) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)),
-        shape = RoundedCornerShape(18.dp),
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "Внешний вид",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
-                modifier = Modifier.padding(bottom = 12.dp),
-            )
-            HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.35f))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 14.dp),
-            ) {
-                Text(
-                    text = "Тема",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                SingleChoiceSegmentedButtonRow {
+        item {
+            AppCard(modifier = Modifier.fillMaxWidth()) {
+                Text("Appearance", style = MaterialTheme.typography.titleMedium)
+                SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
                     AppTheme.entries.forEachIndexed { index, theme ->
                         SegmentedButton(
-                            selected = theme == currentTheme,
+                            selected = theme == shellState.theme,
                             onClick = { onThemeChange(theme) },
-                            shape = SegmentedButtonDefaults.itemShape(
-                                index = index,
-                                count = AppTheme.entries.size,
-                            ),
+                            shape = SegmentedButtonDefaults.itemShape(index = index, count = AppTheme.entries.size),
                             label = { Text(theme.title) },
                         )
                     }
                 }
+            }
+        }
+
+        items(sections.drop(1)) { section ->
+            AppCard(modifier = Modifier.fillMaxWidth()) {
+                Text(section, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "Раздел в процессе обновления UX",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
     }

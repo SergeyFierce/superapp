@@ -1,17 +1,20 @@
 package ru.topskiy.superapp.features.planner
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Event
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import ru.topskiy.superapp.core.home.HomeBlockProvider
 import ru.topskiy.superapp.core.services.ServiceId
+import ru.topskiy.superapp.core.ui.components.AppCard
+import ru.topskiy.superapp.core.ui.tokens.Spacing
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,37 +26,24 @@ class PlannerHomeBlock @Inject constructor() : HomeBlockProvider {
 
     @Composable
     override fun Content() {
-        Card(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+        AppCard(modifier = Modifier.fillMaxWidth()) {
+            androidx.compose.foundation.layout.Row(
+                horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+            ) {
+                Icon(Icons.Outlined.Event, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Text(
                     text = "Задачи на сегодня",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.weight(1f),
                 )
-                Text(
-                    text = "• Встреча с командой в 14:00",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-                Text(
-                    text = "• Подготовить отчёт",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-                Text(
-                    text = "• Позвонить в банк",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
+                Icon(Icons.AutoMirrored.Outlined.ArrowForward, contentDescription = null)
             }
+            Text(
+                text = "Встреча с командой, отчёт и звонок в банк",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = Spacing.xs),
+            )
         }
     }
 }
