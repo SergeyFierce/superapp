@@ -25,8 +25,6 @@ class FinanceHomeBlock @Inject constructor() : HomeBlockProvider {
     override val priority = 30
 
     @Composable
-    override fun Content() {
-        AppCard(modifier = Modifier.fillMaxWidth()) {
     override fun Content(modifier: Modifier) {
         AppCard(modifier = modifier.fillMaxWidth()) {
             androidx.compose.foundation.layout.Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
