@@ -62,13 +62,6 @@ fun HomeScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     quickActions.forEach { block ->
                         val route = viewModel.routeFor(block.serviceId)
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(enabled = route != null) { route?.let(onRouteOpen) },
-                        ) {
-                            block.Content()
-                        }
                         block.Content(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -84,13 +77,6 @@ fun HomeScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     services.forEach { block ->
                         val route = viewModel.routeFor(block.serviceId)
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(enabled = route != null) { route?.let(onRouteOpen) },
-                        ) {
-                            block.Content()
-                        }
                         block.Content(
                             modifier = Modifier
                                 .fillMaxWidth()

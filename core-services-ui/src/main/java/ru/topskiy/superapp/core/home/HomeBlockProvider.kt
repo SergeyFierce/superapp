@@ -11,5 +11,5 @@ interface HomeBlockProvider {
     val priority: Int get() = 50
 
     @Composable
-    fun Content(modifier: Modifier = Modifier)
+    fun Content(modifier: Modifier)
 }
