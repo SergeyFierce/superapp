@@ -1,8 +1,11 @@
 package ru.topskiy.superapp.shell
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.Home
@@ -13,6 +16,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -27,7 +31,6 @@ import ru.topskiy.superapp.core.services.NavigableServiceProvider
 import ru.topskiy.superapp.core.services.ServiceRegistry
 import ru.topskiy.superapp.core.ui.components.FloatingBottomBar
 import ru.topskiy.superapp.core.ui.components.FloatingBottomBarItem
-import ru.topskiy.superapp.core.ui.tokens.Spacing
 import ru.topskiy.superapp.shell.home.homeScreen
 import ru.topskiy.superapp.shell.search.searchScreen
 import ru.topskiy.superapp.shell.services.servicesScreen
@@ -40,14 +43,6 @@ private val bottomNavItems = listOf(
     FloatingBottomBarItem(AppRoutes.SETTINGS, "Настройки", Icons.Outlined.Settings),
 )
 
-/**
- * Корневая оболочка приложения.
- *
- * Отвечает за:
- * - Root layout с нижней навигацией
- * - Системный NavHost
- * - Привязку ServiceNavigator к NavController (attach/detach)
- */
 @Composable
 fun AppShell(
     serviceRegistry: ServiceRegistry,
@@ -57,7 +52,6 @@ fun AppShell(
     val navController = rememberNavController()
     val shellState by viewModel.state.collectAsStateWithLifecycle()
 
-    // Привязываем ServiceNavigator к NavController на время жизни AppShell
     DisposableEffect(navController) {
         serviceNavigator.attach(navController)
         onDispose { serviceNavigator.detach() }
@@ -66,9 +60,7 @@ fun AppShell(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         AppNavHost(
             navController = navController,
             serviceRegistry = serviceRegistry,
@@ -91,7 +83,8 @@ fun AppShell(
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = Spacing.lg),
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(bottom = 6.dp),
         )
     }
 }
@@ -114,7 +107,6 @@ private fun AppNavHost(
         searchScreen(navController = navController)
         settingsScreen(shellState = shellState, onThemeChange = onThemeChange)
 
-        // Регистрируем графы всех сервисов, которые поддерживают навигацию
         serviceRegistry.getAllProviders()
             .filterIsInstance<NavigableServiceProvider>()
             .forEach { provider ->
@@ -122,4 +114,3 @@ private fun AppNavHost(
             }
     }
 }
-
