@@ -21,6 +21,7 @@ class NotesServiceProvider @Inject constructor() : NavigableServiceProvider {
         title = "Заметки",
         description = "Быстрые заметки и записи",
         icon = ServiceIcon.Key("notes"),
+        icon = ServiceIcon.VectorIcon(Icons.Outlined.StickyNote2),
         rootRoute = AppRoutes.service(NOTES_ID),
         category = ServiceCategory.PRODUCTIVITY,
         enabledByDefault = true,
