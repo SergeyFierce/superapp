@@ -10,12 +10,12 @@ import ru.topskiy.superapp.core.services.ServiceCapability
 import ru.topskiy.superapp.core.services.ServiceCategory
 import ru.topskiy.superapp.core.services.ServiceDescriptor
 import ru.topskiy.superapp.core.services.ServiceId
-import ru.topskiy.superapp.core.services.ServiceProvider
+import ru.topskiy.superapp.core.services.NavigableServiceProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PlannerServiceProvider @Inject constructor() : ServiceProvider {
+class PlannerServiceProvider @Inject constructor() : NavigableServiceProvider {
 
     override val descriptor = ServiceDescriptor(
         id = PLANNER_ID,

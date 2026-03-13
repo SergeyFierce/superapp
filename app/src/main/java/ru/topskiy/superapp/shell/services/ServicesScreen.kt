@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -119,7 +120,7 @@ private fun ServiceCard(
             modifier = Modifier.padding(16.dp),
         ) {
             Icon(
-                imageVector = item.descriptor.icon,
+                imageVector = item.descriptor.icon as ImageVector,
                 contentDescription = item.descriptor.title,
                 modifier = Modifier.size(32.dp),
                 tint = if (item.isEnabled) {

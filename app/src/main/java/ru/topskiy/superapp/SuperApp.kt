@@ -8,15 +8,6 @@ import ru.topskiy.superapp.core.services.ServiceManager
 import ru.topskiy.superapp.features.planner.impl.PlannerCommandHandler
 import javax.inject.Inject
 
-/**
- * Точка входа приложения.
- *
- * Реализует [Configuration.Provider] для передачи [HiltWorkerFactory]
- * в WorkManager — Workers получают зависимости через Hilt.
- *
- * @Inject lateinit var — принудительная инициализация Singleton-объектов,
- * которые должны стартовать до открытия первого экрана.
- */
 @HiltAndroidApp
 class SuperApp : Application(), Configuration.Provider {
 
@@ -28,8 +19,9 @@ class SuperApp : Application(), Configuration.Provider {
     /** Управляет lifecycle background-частей сервисов */
     @Inject lateinit var serviceManager: ServiceManager
 
-    override val workManagerConfiguration: Configuration
-        get() = Configuration.Builder()
+    override fun getWorkManagerConfiguration(): Configuration {
+        return Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
+    }
 }

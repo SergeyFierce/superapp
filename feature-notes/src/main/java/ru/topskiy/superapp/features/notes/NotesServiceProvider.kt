@@ -10,12 +10,12 @@ import ru.topskiy.superapp.core.services.ServiceCapability
 import ru.topskiy.superapp.core.services.ServiceCategory
 import ru.topskiy.superapp.core.services.ServiceDescriptor
 import ru.topskiy.superapp.core.services.ServiceId
-import ru.topskiy.superapp.core.services.ServiceProvider
+import ru.topskiy.superapp.core.services.NavigableServiceProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotesServiceProvider @Inject constructor() : ServiceProvider {
+class NotesServiceProvider @Inject constructor() : NavigableServiceProvider {
 
     override val descriptor = ServiceDescriptor(
         id = NOTES_ID,

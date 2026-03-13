@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ru.topskiy.superapp.core.ui.tokens.Spacing
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
@@ -27,7 +28,7 @@ fun FinanceScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(Spacing.md),
     ) {
         Text(
             text = "Финансы",
@@ -39,7 +40,7 @@ fun FinanceScreen(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(Spacing.sm))
 
         SectionLabel(
             title = "1. CommandBus",
