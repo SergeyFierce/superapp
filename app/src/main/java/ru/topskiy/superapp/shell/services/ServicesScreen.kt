@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ru.topskiy.superapp.core.navigation.AppRoutes
+import ru.topskiy.superapp.core.services.ServiceIcon
 import ru.topskiy.superapp.core.services.ServiceRegistry
 import ru.topskiy.superapp.core.services.ui.asImageVector
 
@@ -138,6 +139,16 @@ private fun ServiceCard(
                     modifier = Modifier.size(22.dp),
                     tint = if (item.isEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.45f),
                 )
+                when (val icon = item.descriptor.icon) {
+                    is ServiceIcon.VectorIcon -> {
+                        Icon(
+                            imageVector = icon.icon,
+                            contentDescription = item.descriptor.title,
+                            modifier = Modifier.size(22.dp),
+                            tint = if (item.isEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.45f),
+                        )
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.width(12.dp))

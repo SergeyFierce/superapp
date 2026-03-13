@@ -21,6 +21,7 @@ class FinanceServiceProvider @Inject constructor() : NavigableServiceProvider {
         title = "Финансы",
         description = "Учёт расходов, доходов и платежей",
         icon = ServiceIcon.Key("finance"),
+        icon = ServiceIcon.VectorIcon(Icons.Outlined.AccountBalance),
         rootRoute = AppRoutes.service(FINANCE_ID),
         category = ServiceCategory.FINANCE,
         enabledByDefault = true,
