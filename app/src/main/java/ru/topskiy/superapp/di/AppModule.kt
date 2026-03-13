@@ -8,6 +8,7 @@ import dagger.multibindings.ElementsIntoSet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import ru.topskiy.superapp.core.bootstrap.AppBootstrap
 import ru.topskiy.superapp.core.commands.CommandBus
 import ru.topskiy.superapp.core.di.ApplicationScope
 import ru.topskiy.superapp.core.events.EventBus
@@ -46,6 +47,12 @@ object AppModule {
     @ApplicationScope
     fun provideApplicationScope(): CoroutineScope =
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+
+    @Provides
+    @ElementsIntoSet
+    fun provideInitialAppBootstraps(): Set<@JvmSuppressWildcards AppBootstrap> =
+        emptySet()
 
     @Provides
     @ElementsIntoSet
