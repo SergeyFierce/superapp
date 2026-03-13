@@ -8,7 +8,6 @@ import ru.topskiy.superapp.core.services.ServiceCapability
 import ru.topskiy.superapp.core.services.ServiceCategory
 import ru.topskiy.superapp.core.services.ServiceDescriptor
 import ru.topskiy.superapp.core.services.ServiceId
-import ru.topskiy.superapp.core.services.ServiceIcon
 import ru.topskiy.superapp.core.services.NavigableServiceProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,8 +19,7 @@ class PlannerServiceProvider @Inject constructor() : NavigableServiceProvider {
         id = PLANNER_ID,
         title = "Планировщик",
         description = "Задачи, события и напоминания",
-        icon = ServiceIcon.Key("planner"),
-        icon = ServiceIcon.VectorIcon(Icons.Outlined.CalendarToday),
+        iconKey = "planner",
         rootRoute = AppRoutes.service(PLANNER_ID),
         category = ServiceCategory.PRODUCTIVITY,
         enabledByDefault = true,

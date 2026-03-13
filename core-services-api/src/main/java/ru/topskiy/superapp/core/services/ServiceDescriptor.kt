@@ -11,7 +11,7 @@ data class ServiceDescriptor(
     val id: ServiceId,
     val title: String,
     val description: String = "",
-    val icon: ServiceIcon,
+    val iconKey: String,
     /** Корневой маршрут навигации */
     val rootRoute: String,
     val category: ServiceCategory,
