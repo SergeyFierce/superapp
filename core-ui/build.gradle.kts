@@ -20,8 +20,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-common"))
+    api(project(":core-common"))
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.material3)
