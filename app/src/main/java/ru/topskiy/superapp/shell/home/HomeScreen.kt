@@ -69,6 +69,11 @@ fun HomeScreen(
                         ) {
                             block.Content()
                         }
+                        block.Content(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = route != null) { route?.let(onRouteOpen) },
+                        )
                     }
                 }
             }
@@ -86,6 +91,11 @@ fun HomeScreen(
                         ) {
                             block.Content()
                         }
+                        block.Content(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = route != null) { route?.let(onRouteOpen) },
+                        )
                     }
                 }
             }

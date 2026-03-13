@@ -27,6 +27,8 @@ class NotesHomeBlock @Inject constructor() : HomeBlockProvider {
     @Composable
     override fun Content() {
         AppCard(modifier = Modifier.fillMaxWidth()) {
+    override fun Content(modifier: Modifier) {
+        AppCard(modifier = modifier.fillMaxWidth()) {
             androidx.compose.foundation.layout.Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Icon(Icons.Outlined.StickyNote2, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Text("Последние заметки", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))

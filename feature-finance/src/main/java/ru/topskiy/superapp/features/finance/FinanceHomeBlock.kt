@@ -27,6 +27,8 @@ class FinanceHomeBlock @Inject constructor() : HomeBlockProvider {
     @Composable
     override fun Content() {
         AppCard(modifier = Modifier.fillMaxWidth()) {
+    override fun Content(modifier: Modifier) {
+        AppCard(modifier = modifier.fillMaxWidth()) {
             androidx.compose.foundation.layout.Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                 Icon(Icons.Outlined.AccountBalanceWallet, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Text("Ближайшие платежи", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
