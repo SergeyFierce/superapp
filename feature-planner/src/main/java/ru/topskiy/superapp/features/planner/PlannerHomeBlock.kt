@@ -25,6 +25,8 @@ class PlannerHomeBlock @Inject constructor() : HomeBlockProvider {
     override val priority = 10
 
     @Composable
+    override fun Content() {
+        AppCard(modifier = Modifier.fillMaxWidth()) {
     override fun Content(modifier: Modifier) {
         AppCard(modifier = modifier.fillMaxWidth()) {
             androidx.compose.foundation.layout.Row(

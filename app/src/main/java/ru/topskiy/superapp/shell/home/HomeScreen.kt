@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -61,6 +62,13 @@ fun HomeScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     quickActions.forEach { block ->
                         val route = viewModel.routeFor(block.serviceId)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = route != null) { route?.let(onRouteOpen) },
+                        ) {
+                            block.Content()
+                        }
                         block.Content(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -76,6 +84,13 @@ fun HomeScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                     services.forEach { block ->
                         val route = viewModel.routeFor(block.serviceId)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(enabled = route != null) { route?.let(onRouteOpen) },
+                        ) {
+                            block.Content()
+                        }
                         block.Content(
                             modifier = Modifier
                                 .fillMaxWidth()
