@@ -1,18 +1,19 @@
 package ru.topskiy.superapp.core.ui.theme
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import ru.topskiy.superapp.core.common.AppTheme as AppThemeSelection
 
 /**
  * Тема приложения — Warm Premium.
- *
- * Принимает [themeSelection] для учёта пользовательских настроек.
- * По умолчанию использует системную тему.
- *
- * @param themeSelection выбор темы (LIGHT / DARK / SYSTEM)
- * @param content контент, обёрнутый в тему
  */
 @Composable
 fun AppTheme(
@@ -25,6 +26,19 @@ fun AppTheme(
     content: @Composable () -> Unit,
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val view = LocalView.current
+
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = view.context.findActivity()?.window ?: return@SideEffect
+            window.statusBarColor = colorScheme.background.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
+
+            val insetsController = WindowCompat.getInsetsController(window, view)
+            insetsController.isAppearanceLightStatusBars = !darkTheme
+            insetsController.isAppearanceLightNavigationBars = !darkTheme
+        }
+    }
 
     MaterialTheme(
         colorScheme = colorScheme,
@@ -32,4 +46,10 @@ fun AppTheme(
         shapes = Shapes,
         content = content,
     )
+}
+
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }
