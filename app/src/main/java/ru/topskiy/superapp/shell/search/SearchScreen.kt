@@ -1,11 +1,11 @@
 package ru.topskiy.superapp.shell.search
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,19 +13,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -45,10 +48,6 @@ fun NavGraphBuilder.searchScreen(navController: NavController) {
     }
 }
 
-/**
- * Экран глобального поиска — агрегирует результаты от всех
- * зарегистрированных SearchProvider'ов.
- */
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
@@ -57,6 +56,12 @@ fun SearchScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
+        Text(
+            text = "Поиск",
+            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 20.dp),
+        )
+
         OutlinedTextField(
             value = state.query,
             onValueChange = viewModel::onQueryChange,
@@ -68,6 +73,7 @@ fun SearchScreen(
                 )
             },
             singleLine = true,
+            shape = RoundedCornerShape(16.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -83,10 +89,7 @@ fun SearchScreen(
                 }
             }
 
-            state.query.isBlank() -> {
-                SearchHint()
-            }
-
+            state.query.isBlank() -> SearchHint()
             state.results.isEmpty() -> {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -100,12 +103,7 @@ fun SearchScreen(
                 }
             }
 
-            else -> {
-                SearchResultList(
-                    results = state.results,
-                    onResultClick = onResultClick,
-                )
-            }
+            else -> SearchResultList(results = state.results, onResultClick = onResultClick)
         }
     }
 }
@@ -120,10 +118,7 @@ private fun SearchHint() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            Text(
-                text = "Введите запрос",
-                style = MaterialTheme.typography.titleMedium,
-            )
+            Text(text = "Введите запрос", style = MaterialTheme.typography.titleMedium)
             Text(
                 text = "Поиск выполняется по всем подключённым сервисам",
                 style = MaterialTheme.typography.bodySmall,
@@ -138,43 +133,44 @@ private fun SearchResultList(
     results: List<SearchResult>,
     onResultClick: (SearchResult) -> Unit,
 ) {
-    // Группировка результатов по сервису для удобного отображения
     val grouped = results.groupBy { it.serviceId }
 
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 16.dp),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 110.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier.fillMaxSize(),
     ) {
         grouped.forEach { (serviceId, serviceResults) ->
             item(key = "header_$serviceId") {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Text(
-                        text = serviceId.value,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
+                Text(
+                    text = serviceId.value,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp),
+                )
             }
 
             items(
                 items = serviceResults,
                 key = { "${it.serviceId.value}_${it.id}" },
             ) { result ->
-                ListItem(
-                    headlineContent = { Text(result.title) },
-                    supportingContent = result.subtitle?.let { sub ->
-                        { Text(sub, color = MaterialTheme.colorScheme.onSurfaceVariant) }
-                    },
-                    modifier = Modifier.clickable { onResultClick(result) },
-                )
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                Surface(
+                    shape = RoundedCornerShape(14.dp),
+                    color = MaterialTheme.colorScheme.surface,
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)),
+                ) {
+                    ListItem(
+                        headlineContent = { Text(result.title) },
+                        supportingContent = result.subtitle?.let { sub ->
+                            { Text(sub, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
+                        modifier = Modifier.clickable { onResultClick(result) },
+                    )
+                }
             }
 
-            item(key = "spacer_$serviceId") { Spacer(modifier = Modifier.height(4.dp)) }
+            item(key = "spacer_$serviceId") { Spacer(modifier = Modifier.height(2.dp)) }
         }
     }
 }
