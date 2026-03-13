@@ -21,6 +21,7 @@ class PlannerServiceProvider @Inject constructor() : NavigableServiceProvider {
         title = "Планировщик",
         description = "Задачи, события и напоминания",
         icon = ServiceIcon.Key("planner"),
+        icon = ServiceIcon.VectorIcon(Icons.Outlined.CalendarToday),
         rootRoute = AppRoutes.service(PLANNER_ID),
         category = ServiceCategory.PRODUCTIVITY,
         enabledByDefault = true,
