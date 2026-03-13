@@ -27,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,6 +35,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ru.topskiy.superapp.core.navigation.AppRoutes
+import ru.topskiy.superapp.core.services.ServiceIcon
 import ru.topskiy.superapp.core.services.ServiceRegistry
 
 fun NavGraphBuilder.servicesScreen(
@@ -132,12 +132,16 @@ private fun ServiceCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
-                Icon(
-                    imageVector = item.descriptor.icon as ImageVector,
-                    contentDescription = item.descriptor.title,
-                    modifier = Modifier.size(22.dp),
-                    tint = if (item.isEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.45f),
-                )
+                when (val icon = item.descriptor.icon) {
+                    is ServiceIcon.VectorIcon -> {
+                        Icon(
+                            imageVector = icon.icon,
+                            contentDescription = item.descriptor.title,
+                            modifier = Modifier.size(22.dp),
+                            tint = if (item.isEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.45f),
+                        )
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.width(12.dp))

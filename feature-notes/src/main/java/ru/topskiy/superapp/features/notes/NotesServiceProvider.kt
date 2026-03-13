@@ -10,6 +10,7 @@ import ru.topskiy.superapp.core.services.ServiceCapability
 import ru.topskiy.superapp.core.services.ServiceCategory
 import ru.topskiy.superapp.core.services.ServiceDescriptor
 import ru.topskiy.superapp.core.services.ServiceId
+import ru.topskiy.superapp.core.services.ServiceIcon
 import ru.topskiy.superapp.core.services.NavigableServiceProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,7 +22,7 @@ class NotesServiceProvider @Inject constructor() : NavigableServiceProvider {
         id = NOTES_ID,
         title = "Заметки",
         description = "Быстрые заметки и записи",
-        icon = Icons.Outlined.StickyNote2,
+        icon = ServiceIcon.VectorIcon(Icons.Outlined.StickyNote2),
         rootRoute = AppRoutes.service(NOTES_ID),
         category = ServiceCategory.PRODUCTIVITY,
         enabledByDefault = true,
