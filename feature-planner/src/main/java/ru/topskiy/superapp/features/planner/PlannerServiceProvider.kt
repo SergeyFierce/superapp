@@ -1,7 +1,5 @@
 package ru.topskiy.superapp.features.planner
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -22,6 +20,7 @@ class PlannerServiceProvider @Inject constructor() : NavigableServiceProvider {
         id = PLANNER_ID,
         title = "Планировщик",
         description = "Задачи, события и напоминания",
+        icon = ServiceIcon.Key("planner"),
         icon = ServiceIcon.VectorIcon(Icons.Outlined.CalendarToday),
         rootRoute = AppRoutes.service(PLANNER_ID),
         category = ServiceCategory.PRODUCTIVITY,

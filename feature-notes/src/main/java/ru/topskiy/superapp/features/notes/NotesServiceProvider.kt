@@ -1,7 +1,5 @@
 package ru.topskiy.superapp.features.notes
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.StickyNote2
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -22,6 +20,7 @@ class NotesServiceProvider @Inject constructor() : NavigableServiceProvider {
         id = NOTES_ID,
         title = "Заметки",
         description = "Быстрые заметки и записи",
+        icon = ServiceIcon.Key("notes"),
         icon = ServiceIcon.VectorIcon(Icons.Outlined.StickyNote2),
         rootRoute = AppRoutes.service(NOTES_ID),
         category = ServiceCategory.PRODUCTIVITY,

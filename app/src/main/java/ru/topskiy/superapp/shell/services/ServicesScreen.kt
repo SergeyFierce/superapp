@@ -37,6 +37,7 @@ import androidx.navigation.compose.composable
 import ru.topskiy.superapp.core.navigation.AppRoutes
 import ru.topskiy.superapp.core.services.ServiceIcon
 import ru.topskiy.superapp.core.services.ServiceRegistry
+import ru.topskiy.superapp.core.services.ui.asImageVector
 
 fun NavGraphBuilder.servicesScreen(
     navController: NavController,
@@ -132,6 +133,12 @@ private fun ServiceCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
+                Icon(
+                    imageVector = item.descriptor.icon.asImageVector(),
+                    contentDescription = item.descriptor.title,
+                    modifier = Modifier.size(22.dp),
+                    tint = if (item.isEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.45f),
+                )
                 when (val icon = item.descriptor.icon) {
                     is ServiceIcon.VectorIcon -> {
                         Icon(

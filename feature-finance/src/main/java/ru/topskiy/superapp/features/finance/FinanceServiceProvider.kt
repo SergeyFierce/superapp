@@ -1,7 +1,5 @@
 package ru.topskiy.superapp.features.finance
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountBalance
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -22,6 +20,7 @@ class FinanceServiceProvider @Inject constructor() : NavigableServiceProvider {
         id = FINANCE_ID,
         title = "Финансы",
         description = "Учёт расходов, доходов и платежей",
+        icon = ServiceIcon.Key("finance"),
         icon = ServiceIcon.VectorIcon(Icons.Outlined.AccountBalance),
         rootRoute = AppRoutes.service(FINANCE_ID),
         category = ServiceCategory.FINANCE,
