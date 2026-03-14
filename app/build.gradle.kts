@@ -42,21 +42,30 @@ android {
 dependencies {
     // Core modules
     implementation(project(":core-common"))
-    implementation(project(":core-events"))
-    implementation(project(":core-commands"))
-    implementation(project(":core-services-api"))
-    implementation(project(":core-services-runtime"))
-    implementation(project(":core-services-ui"))
     implementation(project(":core-database"))
-    implementation(project(":core-preferences"))
+    implementation(project(":core-datastore"))
     implementation(project(":core-jobs"))
     implementation(project(":core-navigation"))
     implementation(project(":core-ui"))
 
-    // Feature modules
-    implementation(project(":feature-planner"))
-    implementation(project(":feature-notes"))
-    implementation(project(":feature-finance"))
+    // Platform modules
+    implementation(project(":platform-api"))
+    implementation(project(":platform-commands"))
+    implementation(project(":platform-events"))
+    implementation(project(":platform-runtime"))
+    implementation(project(":platform-navigation"))
+    implementation(project(":platform-ui"))
+
+    // Feature modules (shell screens)
+    implementation(project(":feature-home"))
+    implementation(project(":feature-services"))
+    implementation(project(":feature-search"))
+    implementation(project(":feature-settings"))
+    // Service modules
+    implementation(project(":service-planner"))
+    implementation(project(":service-notes"))
+    implementation(project(":service-finance"))
+    implementation(project(":service-diary"))
 
     // Android & Compose
     implementation(libs.androidx.core.ktx)

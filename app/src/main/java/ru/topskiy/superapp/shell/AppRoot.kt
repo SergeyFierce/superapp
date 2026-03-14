@@ -5,8 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.topskiy.superapp.core.navigation.AppRoutes
-import ru.topskiy.superapp.core.navigation.ServiceNavigator
-import ru.topskiy.superapp.core.services.ServiceRegistry
+import ru.topskiy.superapp.platform.navigation.ServiceNavigator
+import ru.topskiy.superapp.platform.runtime.ServiceRegistry
 import ru.topskiy.superapp.shell.bootstrap.bootstrapScreen
 import ru.topskiy.superapp.shell.onboarding.onboardingScreen
 

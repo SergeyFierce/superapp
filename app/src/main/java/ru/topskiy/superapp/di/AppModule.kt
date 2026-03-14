@@ -9,12 +9,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import ru.topskiy.superapp.core.bootstrap.AppBootstrap
-import ru.topskiy.superapp.core.commands.CommandBus
 import ru.topskiy.superapp.core.di.ApplicationScope
-import ru.topskiy.superapp.core.events.EventBus
-import ru.topskiy.superapp.core.home.HomeBlockProvider
-import ru.topskiy.superapp.core.search.SearchProvider
-import ru.topskiy.superapp.core.services.ServicePlugin
+import ru.topskiy.superapp.platform.api.HomeBlockProvider
+import ru.topskiy.superapp.platform.api.SearchProvider
+import ru.topskiy.superapp.platform.api.ServicePlugin
+import ru.topskiy.superapp.platform.commands.CommandBus
+import ru.topskiy.superapp.platform.events.EventBus
 import javax.inject.Singleton
 
 /**

@@ -11,8 +11,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import ru.topskiy.superapp.core.navigation.ServiceNavigator
-import ru.topskiy.superapp.core.services.ServiceRegistry
+import ru.topskiy.superapp.platform.navigation.ServiceNavigator
+import ru.topskiy.superapp.platform.runtime.ServiceRegistry
 import ru.topskiy.superapp.core.ui.theme.AppTheme
 import ru.topskiy.superapp.shell.AppRoot
 import ru.topskiy.superapp.shell.ThemeViewModel

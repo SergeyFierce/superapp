@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ru.topskiy.superapp.core.common.AppTheme
-import ru.topskiy.superapp.core.preferences.PreferencesRepository
-import ru.topskiy.superapp.core.services.ServiceId
+import ru.topskiy.superapp.core.datastore.PreferencesRepository
+import ru.topskiy.superapp.platform.api.ServiceId
 import javax.inject.Inject
 
 /**

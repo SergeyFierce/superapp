@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import ru.topskiy.superapp.core.preferences.PreferencesRepository
+import ru.topskiy.superapp.core.datastore.PreferencesRepository
 import javax.inject.Inject
 
 enum class BootstrapDestination { LOADING, ONBOARDING, SHELL }

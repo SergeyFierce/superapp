@@ -1,7 +1,5 @@
 package ru.topskiy.superapp.core.navigation
 
-import ru.topskiy.superapp.core.services.ServiceId
-
 /**
  * Единый источник истины для всех маршрутов приложения.
  *
@@ -25,9 +23,9 @@ object AppRoutes {
     private const val SERVICE_PREFIX = "service"
 
     /** Корневой маршрут сервиса: "service/{serviceId}" */
-    fun service(serviceId: ServiceId) = "$SERVICE_PREFIX/${serviceId.value}"
+    fun serviceRoute(serviceId: String) = "$SERVICE_PREFIX/$serviceId"
 
     /** Маршрут с вложенным путём: "service/{serviceId}/{subPath}" */
-    fun serviceSubRoute(serviceId: ServiceId, subPath: String) =
-        "$SERVICE_PREFIX/${serviceId.value}/$subPath"
+    fun serviceSubRoute(serviceId: String, subPath: String) =
+        "$SERVICE_PREFIX/$serviceId/$subPath"
 }

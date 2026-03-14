@@ -27,15 +27,15 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.topskiy.superapp.core.common.AppTheme
 import ru.topskiy.superapp.core.navigation.AppRoutes
-import ru.topskiy.superapp.core.navigation.ServiceNavigator
-import ru.topskiy.superapp.core.services.NavigableServiceProvider
-import ru.topskiy.superapp.core.services.ServiceRegistry
+import ru.topskiy.superapp.platform.api.NavigableServiceProvider
+import ru.topskiy.superapp.platform.navigation.ServiceNavigator
+import ru.topskiy.superapp.platform.runtime.ServiceRegistry
 import ru.topskiy.superapp.core.ui.components.FloatingBottomBar
 import ru.topskiy.superapp.core.ui.components.FloatingBottomBarItem
-import ru.topskiy.superapp.shell.home.homeScreen
-import ru.topskiy.superapp.shell.search.searchScreen
-import ru.topskiy.superapp.shell.services.servicesScreen
-import ru.topskiy.superapp.shell.settings.settingsScreen
+import ru.topskiy.superapp.features.home.homeScreen
+import ru.topskiy.superapp.features.search.searchScreen
+import ru.topskiy.superapp.features.services.servicesScreen
+import ru.topskiy.superapp.features.settings.settingsScreen
 
 private val bottomNavItems = listOf(
     FloatingBottomBarItem(AppRoutes.HOME, "Главная", Icons.Outlined.Home),
@@ -103,7 +103,7 @@ private fun AppNavHost(
         homeScreen(navController = navController)
         servicesScreen(navController = navController, serviceRegistry = serviceRegistry)
         searchScreen(navController = navController)
-        settingsScreen(shellState = shellState, onThemeChange = onThemeChange)
+        settingsScreen(theme = shellState.theme, onThemeChange = onThemeChange)
 
         serviceRegistry.getAllProviders()
             .filterIsInstance<NavigableServiceProvider>()

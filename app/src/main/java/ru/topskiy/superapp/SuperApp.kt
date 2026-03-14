@@ -5,7 +5,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import ru.topskiy.superapp.core.bootstrap.AppBootstrap
-import ru.topskiy.superapp.core.services.ServiceManager
+import ru.topskiy.superapp.platform.runtime.ServiceManager
 import javax.inject.Inject
 
 @HiltAndroidApp

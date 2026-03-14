@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ru.topskiy.superapp.core.preferences.PreferencesRepository
+import ru.topskiy.superapp.core.datastore.PreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
