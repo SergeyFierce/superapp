@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import ru.topskiy.superapp.platform.navigation.ServiceNavigator
-import ru.topskiy.superapp.platform.runtime.ServiceRegistry
+import ru.topskiy.superapp.platform.runtime.ServiceManager
 import ru.topskiy.superapp.core.ui.theme.AppTheme
 import ru.topskiy.superapp.shell.AppRoot
 import ru.topskiy.superapp.shell.ThemeViewModel
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject lateinit var serviceRegistry: ServiceRegistry
+    @Inject lateinit var serviceManager: ServiceManager
     @Inject lateinit var serviceNavigator: ServiceNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     AppRoot(
-                        serviceRegistry = serviceRegistry,
+                        serviceManager = serviceManager,
                         serviceNavigator = serviceNavigator,
                     )
                 }

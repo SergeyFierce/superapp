@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.topskiy.superapp.core.navigation.AppRoutes
 import ru.topskiy.superapp.platform.navigation.ServiceNavigator
-import ru.topskiy.superapp.platform.runtime.ServiceRegistry
+import ru.topskiy.superapp.platform.runtime.ServiceManager
 import ru.topskiy.superapp.shell.bootstrap.bootstrapScreen
 import ru.topskiy.superapp.shell.onboarding.onboardingScreen
 
@@ -23,7 +23,7 @@ import ru.topskiy.superapp.shell.onboarding.onboardingScreen
  */
 @Composable
 fun AppRoot(
-    serviceRegistry: ServiceRegistry,
+    serviceManager: ServiceManager,
     serviceNavigator: ServiceNavigator,
 ) {
     val rootNavController = rememberNavController()
@@ -55,7 +55,7 @@ fun AppRoot(
 
         composable(AppRoutes.SHELL) {
             AppShell(
-                serviceRegistry = serviceRegistry,
+                serviceManager = serviceManager,
                 serviceNavigator = serviceNavigator,
             )
         }

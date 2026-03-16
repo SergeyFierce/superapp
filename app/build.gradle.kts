@@ -41,31 +41,31 @@ android {
 
 dependencies {
     // Core modules
-    implementation(project(":core-common"))
-    implementation(project(":core-database"))
-    implementation(project(":core-datastore"))
-    implementation(project(":core-jobs"))
-    implementation(project(":core-navigation"))
-    implementation(project(":core-ui"))
+    implementation(project(":core:core-common"))
+    implementation(project(":core:core-database"))
+    implementation(project(":core:core-datastore"))
+    implementation(project(":core:core-jobs"))
+    implementation(project(":core:core-navigation"))
+    implementation(project(":core:core-ui"))
 
     // Platform modules
-    implementation(project(":platform-api"))
-    implementation(project(":platform-commands"))
-    implementation(project(":platform-events"))
-    implementation(project(":platform-runtime"))
-    implementation(project(":platform-navigation"))
-    implementation(project(":platform-ui"))
+    implementation(project(":platform:platform-api"))
+    implementation(project(":platform:platform-commands"))
+    implementation(project(":platform:platform-events"))
+    implementation(project(":platform:platform-runtime"))
+    implementation(project(":platform:platform-navigation"))
+    implementation(project(":platform:platform-ui"))
 
     // Feature modules (shell screens)
-    implementation(project(":feature-home"))
-    implementation(project(":feature-services"))
-    implementation(project(":feature-search"))
-    implementation(project(":feature-settings"))
+    implementation(project(":features:feature-home"))
+    implementation(project(":features:feature-services"))
+    implementation(project(":features:feature-search"))
+    implementation(project(":features:feature-settings"))
     // Service modules
-    implementation(project(":service-planner"))
-    implementation(project(":service-notes"))
-    implementation(project(":service-finance"))
-    implementation(project(":service-diary"))
+    implementation(project(":services:service-planner"))
+    implementation(project(":services:service-notes"))
+    implementation(project(":services:service-finance"))
+    implementation(project(":services:service-diary"))
 
     // Android & Compose
     implementation(libs.androidx.core.ktx)

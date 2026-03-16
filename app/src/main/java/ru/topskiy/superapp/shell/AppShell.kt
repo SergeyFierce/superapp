@@ -29,7 +29,7 @@ import ru.topskiy.superapp.core.common.AppTheme
 import ru.topskiy.superapp.core.navigation.AppRoutes
 import ru.topskiy.superapp.platform.api.NavigableServiceProvider
 import ru.topskiy.superapp.platform.navigation.ServiceNavigator
-import ru.topskiy.superapp.platform.runtime.ServiceRegistry
+import ru.topskiy.superapp.platform.runtime.ServiceManager
 import ru.topskiy.superapp.core.ui.components.FloatingBottomBar
 import ru.topskiy.superapp.core.ui.components.FloatingBottomBarItem
 import ru.topskiy.superapp.features.home.homeScreen
@@ -46,7 +46,7 @@ private val bottomNavItems = listOf(
 
 @Composable
 fun AppShell(
-    serviceRegistry: ServiceRegistry,
+    serviceManager: ServiceManager,
     serviceNavigator: ServiceNavigator,
     viewModel: ShellViewModel = hiltViewModel(),
 ) {
@@ -64,7 +64,7 @@ fun AppShell(
     Box(modifier = Modifier.fillMaxSize()) {
         AppNavHost(
             navController = navController,
-            serviceRegistry = serviceRegistry,
+            serviceManager = serviceManager,
             shellState = shellState,
             onThemeChange = viewModel::setTheme,
             modifier = Modifier.fillMaxSize(),
@@ -90,7 +90,7 @@ fun AppShell(
 @Composable
 private fun AppNavHost(
     navController: NavHostController,
-    serviceRegistry: ServiceRegistry,
+    serviceManager: ServiceManager,
     shellState: AppShellState,
     onThemeChange: (AppTheme) -> Unit,
     modifier: Modifier = Modifier,
@@ -101,11 +101,11 @@ private fun AppNavHost(
         modifier = modifier.windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)),
     ) {
         homeScreen(navController = navController)
-        servicesScreen(navController = navController, serviceRegistry = serviceRegistry)
+        servicesScreen(navController = navController)
         searchScreen(navController = navController)
         settingsScreen(theme = shellState.theme, onThemeChange = onThemeChange)
 
-        serviceRegistry.getAllProviders()
+        serviceManager.registry.getAllProviders()
             .filterIsInstance<NavigableServiceProvider>()
             .forEach { provider -> with(provider) { registerGraph(navController) } }
     }
